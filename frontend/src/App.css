@@ -1,0 +1,65 @@
+body {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 270px;
+  animation: App-logo-spin infinite 20s linear;
+}
+
+.App-header {
+  background-color: #3E3939;
+  height: 8%;
+  padding: 3%;
+  color: white;
+  text-align: center;
+}
+
+.App-intro {
+  font-size: large;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  height: 3%;
+  width: 100%;
+  text-align: right;
+  padding-right: 1%;
+  background-color: #EFEBEB;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.navbar{
+  margin-right: 1%; 
+  margin-bottom: 1%;
+}
+
+/* removing text blue, not working */
+button{
+  text-decoration: none;
+}
+
+.form{
+  border: 1px solid black;
+  padding: 2%;
+  width: 50%;
+  margin-left: 25%;
+  background-color: #DCDCDC;
+}
+
+/* input{
+  display: block;
+  text-align: left;
+} */
+
+.image{
+  height: 400px;
+  padding: 2%;
+}
