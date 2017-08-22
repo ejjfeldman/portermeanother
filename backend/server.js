@@ -63,7 +63,7 @@ app.get('/randombeer', (req, response) => {
             if (error) {
                 throw error
             }
-            else if (bod.pager.total_record_count === 0){
+            else if (bod.pager && bod.pager.total_record_count === 0){
                 availbility = false;
                 console.log(respons.body)
                 console.log('that wasn"t at LCBO')

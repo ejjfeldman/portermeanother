@@ -76,8 +76,8 @@ class BeerResult extends Component {
                 <p>IBU: {beerIBU}</p>
                 <img className="image" alt="beer result" src={beerImage} />
                 <br />
-                <button className="btn btn-primary" onClick={() => { this.props.clickBeer() }}> Beer me again!</button>
-                <Link to="/Form"><button className="btn btn-secondary" onClick={this.props.returnForm}>Narrow my search</button></Link>
+                <button className="btn btn-primary result-button" onClick={() => { this.props.clickBeer() }}> Beer me again!</button>
+                <Link to="/Form"><button className="btn btn-secondary result-button" onClick={this.props.returnForm}>Narrow my search</button></Link>
             </div>
         )
     }

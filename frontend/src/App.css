@@ -17,6 +17,7 @@ body {
   padding: 3%;
   color: white;
   text-align: center;
+  margin-top: 1%;
 }
 
 .App-intro {
@@ -61,6 +62,10 @@ button{
 } */
 
 .image{
-  height: 400px;
+  max-height: 400px;
   padding: 2%;
+}
+
+.result-button{
+  margin-bottom: 5%;
 }

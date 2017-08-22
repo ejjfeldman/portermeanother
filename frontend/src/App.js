@@ -45,6 +45,10 @@ class App extends Component {
   }
   //getting random beer from onClick (accessing results from brewerydb api)
   getRandomBeer() {
+    console.log("get random beer ran")
+    this.setState({
+      hasBeer: false
+    })
     axios.get("/randombeer")
       .then(res => {
 
@@ -66,6 +70,8 @@ class App extends Component {
   //FIX ME!!
 //getting specific beer from form input
   getSpecificBeer(valuesToUse) {
+    //trying to console.log to see when beer is retrieved
+    
     axios.post("/specificbeer", {formResults: valuesToUse})
       .then(res=>{
         let specificBeer = res.data.filter((beer) => {
