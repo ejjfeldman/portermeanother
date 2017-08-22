@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-class BeerResult extends Component {
+class SpecificResult extends Component {
     render() {
 
-        if (!this.props.hasBeer) {
+        if (!this.props.returnedBeer) {
             return (
                 <h1> WAITING TO GET LOADED </h1>
             )
@@ -26,6 +26,15 @@ class BeerResult extends Component {
         }
         //write function to change image based on specific style beer
         // getDefaultImage(style)
+
+        let beerName;
+
+        if(!this.props.returnedBeer){
+            alert("Unfortunately there are no available beers that fit your description. Please try again!")
+        }
+        else{
+            beerName=this.props.returnedBeer.name
+        }
 
         let beerStyle;
 
@@ -67,7 +76,7 @@ class BeerResult extends Component {
         return (
             <div>
 
-                <h2>Drink me: {this.props.returnedBeer.name}</h2>
+                <h2>Drink me: {beerName}</h2>
 
                 <p>Style: {beerStyle}</p>
 
@@ -84,4 +93,4 @@ class BeerResult extends Component {
 }
 
 
-export default BeerResult;
+export default SpecificResult;

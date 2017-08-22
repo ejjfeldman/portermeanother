@@ -3,6 +3,7 @@ import './App.css';
 
 import { Link } from 'react-router';
 import axios from 'axios';
+import {browserHistory} from 'react-router';
 
 let beerImage = {
   default: "bottle.jpg",
@@ -27,7 +28,8 @@ class App extends Component {
       returnedBeer: null,
       hasBeer: false,
       formResults: {},
-      currentBeer: "default"
+      currentBeer: "default",
+      returnedBeer: ""
     }
     this.clickBeer = this.clickBeer.bind(this);
     this.returnForm = this.returnForm.bind(this);
@@ -66,23 +68,32 @@ class App extends Component {
   getSpecificBeer(valuesToUse) {
     axios.post("/specificbeer", {formResults: valuesToUse})
       .then(res=>{
-        let specificBeer = res.data;
+        let specificBeer = res.data.filter((beer) => {
+          console.log("comparing ", beer.style.category.name.toLowerCase(), "to", valuesToUse.beerType)
+          return beer.style.category.name.toLowerCase().includes( valuesToUse.beerType );
+          //return true if it goes in specificBeer
+        });
         console.log(specificBeer);
+        console.log(valuesToUse);
+        
         // function filterItems(specificBeer) {
         //     return newBeer.filter(function(el) {
         //         return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
         //     })
         //   }
+
         let oneBeer = specificBeer[Math.floor(Math.random()*specificBeer.length)];
-        console.log(oneBeer);
+        // console.log(oneBeer);
         this.setState({
-          returnedBeer: specificBeer,
+          returnedBeer: oneBeer,
           hasBeer: true
         })
+        console.log(this.state.returnedBeer)
       })
       .catch(error=>{
         console.log(error);
       })
+      browserHistory.push("/specificResult")
   }
 
   //not setting state...
@@ -129,19 +140,20 @@ class App extends Component {
   render() {
     // console.log(this.props.children);
     return (
-      <div className="App">
+      <div className="App container">
         <div className="navbar navbar-right navbar-static-top">
           <nav>
-            <button><Link to="/"> Home </Link></button>
+            <button ><Link to="/"> Home </Link></button>
             <button><Link to="/about"> About </Link></button>
             <button><Link to="/user"> User Login </Link></button>
           </nav>
         </div>
+        <br />
         <div className="App-header jumbotron">
-          <h1>Beer Roulette</h1>
-          <p>tagline</p>
+          <h1>Porter Me Another</h1>
+          <p>Don't Wine, Have a Beer</p>
         </div>
-        <div className="container">
+        <div >
           {React.cloneElement(this.props.children, {
             "returnForm": this.returnForm,
             "clickBeer": this.getRandomBeer,
@@ -152,6 +164,7 @@ class App extends Component {
             passStateUp: this.passStateUp,
             "getDefaultBeerImage": this.state.getDefaultBeerImage,
             "specificBeer": this.getSpecificBeer
+
           })}
 
           <footer className="App-intro">

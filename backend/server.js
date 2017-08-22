@@ -4,6 +4,9 @@ const request = require('request');
 const axios = require('axios');
 const bodyParser = require('body-parser');
 const keys = require('./key');
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+const cors = require('cors');
 
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,10 +14,26 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json 
 app.use(bodyParser.json())
 
+app.use(cors());
+
 
 app.listen(8080, () => {
     console.log("8080 is listening")
 })
+
+const authCheck = jwt({
+    secret: jwks.expressJwtSecret({
+          cache: true,
+          rateLimit: true,
+          jwksRequestsPerMinute: 5,
+          // YOUR-AUTH0-DOMAIN name e.g prosper.auth0.com
+          jwksUri: "https://{YOUR-AUTH0-DOMAIN}/.well-known/jwks.json"
+      }),
+      // This is the identifier we set when we created the API
+      audience: '{YOUR-API-AUDIENCE-ATTRIBUTE}',
+      issuer: '{YOUR-AUTH0-DOMAIN}',
+      algorithms: ['RS256']
+  });
 
 // var randombeer_routes = require("./routes/randombeer_routes");
 
@@ -68,37 +87,12 @@ app.post('/specificbeer', (req, response) => {
         if (err) {
             throw err
         }
+        console.log(body)
         newBeer = body
         
-        //!!!
-        // //FIX me filter through the beers to find style
-        // if(newBeer.style.category==formResults.style){
-        //     return newBeer
-        // }
-
-        // console.log(newBeer[1].style.category.name)
         response.send(newBeer.data)
         console.log('beer was grabbed')
         
-        //calling the lcbo api to see if the beer is available [returns full list...need to narrow]
-        // let chosenBeer = newBeer.data.name;
-        // console.log(chosenBeer)
-    //     request({ url: "http://lcboapi.com/products?q="+chosenBeer+"&access_key=" + keys.lcboKey, json: true }, (error, respons, bod) => {
-    //         if (error) {
-    //             throw error
-    //         }
-    //         else if (bod.pager.total_record_count === 0){
-    //             availbility = false;
-    //             console.log(respons.body)
-    //             console.log('that wasn"t at LCBO')
-    //             console.log("try "+ bod.suggestion + " instead")
-    //         }
-    //         else {
-    //             console.log("It is available at the lcbo")
-    //         }
-
-    //     }
-    // )
     }) 
 })
 

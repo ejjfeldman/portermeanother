@@ -6,14 +6,14 @@ class Form extends Component {
         super();
         this.state = {
             formValues: {
-                beerType: 'surprise',
+                beerType: '',
                 abv: 'any',
                 ibu: 'any'
             }
 
         }
         this.handleChange = this.handleChange.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
     //orginal, works for one entry
     // getValues(event){
@@ -63,7 +63,7 @@ class Form extends Component {
                             <br />
                         {/* error for value when changed */}
                         <select data-question="beerType" name="type" onChange={(e) => { this.getValues(e) }}>
-                            <option value="surprise" defaultValue>Surprise me!</option>
+                            <option value="" defaultValue>Surprise me!</option>
                             <option value="ale">Ale</option>
                             <option value="lager">Lager</option>
                             <option value="pilsner">Pilsner</option>
@@ -114,8 +114,8 @@ class Form extends Component {
                             More than 121 IBU</label>
                     </div>
                     <div>
-                        <input className="btn btn-primary" type="submit" value="Beer Me!" />
-                        {/* <button type="submit">Beer Me!</button> */}
+                    {/* <Link to="/specificBeer"> */}
+                    <input className="btn btn-primary" type="submit" value="Beer Me!" />
                     </div>
                 </form>
             </div>

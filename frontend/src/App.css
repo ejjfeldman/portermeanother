@@ -39,6 +39,7 @@ body {
 .navbar{
   margin-right: 1%; 
   margin-bottom: 1%;
+  position: relative;
 }
 
 /* removing text blue, not working */
