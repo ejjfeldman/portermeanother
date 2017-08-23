@@ -75,12 +75,15 @@ class App extends Component {
     axios.post("/specificbeer", {formResults: valuesToUse})
       .then(res=>{
         let specificBeer = res.data.filter((beer) => {
-          console.log("comparing ", beer.style.category.name.toLowerCase(), "to", valuesToUse.beerType)
-          return beer.style.category.name.toLowerCase().includes( valuesToUse.beerType );
+          if(!beer || !beer.style.category || !beer.style.name){
+            return false
+          }
+          console.log("comparing ", beer.style.name.toLowerCase(), "to", valuesToUse.beerType)
+          return beer.style.name.toLowerCase().includes( valuesToUse.beerType );
           //return true if it goes in specificBeer
         });
-        console.log(specificBeer);
-        console.log(valuesToUse);
+        console.log("specific beer", specificBeer);
+        console.log("values:", valuesToUse);
         
         // function filterItems(specificBeer) {
         //     return newBeer.filter(function(el) {
@@ -131,16 +134,40 @@ class App extends Component {
 //FIXXXXXXXX
   //setting default image
   getDefaultBeerImage(beer) {
-    let beerStyle = this.props.returnedBeer.style.name;
-    if ((beerStyle.search(/ale/i)) > -1) {
-      this.setState({currentBeer: "ale"})
-    }
-    
-    else {
-      beerImage = "bottle.jpg"
-    }
-  }
+    let beerStyle = beer.style.name;
+    // beerImage[beerStyle]
+    let beerNames = Object.keys(beerImage);
+    console.log(beerNames);
+    console.log(beerStyle);
 
+    for (var i = 0; i < beerNames.length; i++) {
+      if (beerStyle.toLowerCase().includes(beerNames[i])){
+        let beerImage = beerImage[beerNames[i]]
+        return beerImage;
+      }
+      }
+      return beerImage.default;
+    }
+    // if ((beerStyle.search(/ale/i)) > -1) {
+    //   this.setState({beerImage: "ale"})
+    // }
+    
+    // else {
+    //   beerImage = "bottle.jpg"
+  //   // }
+  // }
+
+  // getDefaultBeerImage(beer){
+  //   let specificImage = res.data.filter((beer) => {
+  //     // if(!beer || !beer.style.category || !beer.style.name){
+  //     //   return false
+  //     // }
+  //     console.log("comparing ", beer.style.name.toLowerCase(), "to", valuesToUse.beerType)
+  //     return beer.style.name.toLowerCase().includes( valuesToUse.beerType );
+  //     //return true if it goes in specificBeer
+  //   });
+  //   if(specificImage)
+  // }
   // <img src={beerImage[this.props.beerType]}>
 
   render() {
@@ -159,7 +186,7 @@ class App extends Component {
           <h1>Porter Me Another</h1>
           <p>Don't Wine, Have a Beer</p>
         </div>
-        <div >
+        <div className="mainContent">
           {React.cloneElement(this.props.children, {
             "returnForm": this.returnForm,
             "clickBeer": this.getRandomBeer,
@@ -168,7 +195,7 @@ class App extends Component {
             "hasBeer": this.state.hasBeer,
             handleSubmit: this.handleSubmit,
             passStateUp: this.passStateUp,
-            "getDefaultBeerImage": this.state.getDefaultBeerImage,
+            "getDefaultBeerImage": this.getDefaultBeerImage,
             "specificBeer": this.getSpecificBeer
 
           })}

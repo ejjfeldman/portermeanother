@@ -7,8 +7,8 @@ class Form extends Component {
         this.state = {
             formValues: {
                 beerType: '',
-                abv: 'any',
-                ibu: 'any'
+                abv: '',
+                ibu: ''
             }
 
         }
@@ -80,7 +80,7 @@ class Form extends Component {
                         <br />ABV%
                         <div>
                             <label className="radio">
-                                <input id="anyabv" data-question="abv" type="radio" name="abv" value="+0" />
+                                <input id="anyabv" data-question="abv" type="radio" name="abv" value="" />
                                 Any</label>
                             <label className="radio">
                                 <input id="-4" data-question="abv" type="radio" name="abv" value="-4"/>
@@ -98,7 +98,7 @@ class Form extends Component {
                         IBU
                         <br />
                         <label className="radio">
-                            <input id="anyibu" data-question="ibu" type="radio" name="ibu" value="+0" />
+                            <input id="anyibu" data-question="ibu" type="radio" name="ibu" value="" />
                             Any IBU</label>
                         <label className="radio">
                             <input id="less25" data-question="ibu" type="radio" name="ibu" value="-25" />

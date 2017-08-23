@@ -83,17 +83,46 @@ app.get('/randombeer', (req, response) => {
 app.post('/specificbeer', (req, response) => {
     let formResults = req.body.formResults;
     // console.log(formResults);
-    request({ url: 'http://api.brewerydb.com/v2/beers/?key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu, json: true }, (err, res, body) => {
-        if (err) {
-            throw err
-        }
-        console.log(body)
-        newBeer = body
+//FIX ME!
+    const promises =[];
+    for(let i = 0; i < 10; i++){
+        promises.push(axios.get('http://api.brewerydb.com/v2/beers/?p=' + i + '&key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu))
+    }
+    // const pages = [
+    //     axios.get('http://api.brewerydb.com/v2/beers/?p=' + 1 + '&key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu),
+    //     axios.get('http://api.brewerydb.com/v2/beers/?p=' + 2 + '&key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu)
+    // ]
+    Promise.all(promises)
+        .then((results)=>{
+            console.log(results)
+            let beerArray = []
+            for (let i=0; i<results.length; i++){
+                beerArray = beerArray.concat(results[i].data.data)
+            }
+            response.json(beerArray);
+        })
+
+    // axios.get('http://api.brewerydb.com/v2/beers/?key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu)
+    // .then((res)=>{
+    //     console.log(res.data)
+    //     response.send(res.data)
+    // })
+    // .catch((err)=>{
+    //     console.log(err)
+    //     response.status(500).send("sorry")
+    // })
+
+    // request({ url: 'http://api.brewerydb.com/v2/beers/?key=' +keys.breweryKey + '&abv=' +formResults.abv+ '&ibu='+formResults.ibu, json: true }, (err, res, body) => {
+    //     if (err) {
+    //         throw err
+    //     }
+    //     console.log(body)
+    //     newBeer = body
         
-        response.send(newBeer.data)
-        console.log('beer was grabbed')
+    //     response.send(newBeer.data)
+    //     console.log('beer was grabbed')
         
-    }) 
+    // }) 
 })
 
 // app.post('randombeer', (req, res) => {

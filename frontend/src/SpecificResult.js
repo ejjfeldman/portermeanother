@@ -11,19 +11,36 @@ class SpecificResult extends Component {
         }
         // console.log(this.props.returnedBeer.labels.large)
 
+        // let beerImage;
+        // // check if label field exists, and if it does, use the large field
+        // if (this.props.returnedBeer.labels && this.props.returnedBeer.labels.large) {
+        //     beerImage = this.props.returnedBeer.labels.large
+        // }
+        // // otherwise use a default
+        // //     else if(this.props.returnedBeer.labels == null){
+        // //         this.props.getDefaultBeerImage(this.props.returnedBeer)
+        // // } 
+        // else {
+        //     // this.props.getDefaultBeerImage(this.props.returnedBeer)
+        //     beerImage = "bottle.jpg"
+        // }
+
         let beerImage;
         // check if label field exists, and if it does, use the large field
         if (this.props.returnedBeer.labels && this.props.returnedBeer.labels.large) {
             beerImage = this.props.returnedBeer.labels.large
         }
         // otherwise use a default
-        //     else if(this.props.returnedBeer.labels == null){
+        //     else if(!this.props.returnedBeer.labels){
         //         this.props.getDefaultBeerImage(this.props.returnedBeer)
         // } 
         else {
             // this.props.getDefaultBeerImage(this.props.returnedBeer)
-            beerImage = "bottle.jpg"
+            beerImage = "ale.png"
         }
+
+
+        // this.props.getDefaultBeerImage(this.props.returnedBeer);
         //write function to change image based on specific style beer
         // getDefaultImage(style)
 
@@ -76,17 +93,17 @@ class SpecificResult extends Component {
         return (
             <div>
 
-                <h2>Drink me: {beerName}</h2>
+                <h2><b>Drink me:</b> {beerName}</h2>
 
-                <p>Style: {beerStyle}</p>
+                <p><b>Style:</b> {beerStyle}</p>
 
-                <p>Description: {beerDescription}</p>
-                <p>ABV: {beerABV}</p>
-                <p>IBU: {beerIBU}</p>
+                <p><b>Description:</b> {beerDescription}</p>
+                <p><b>ABV:</b> {beerABV}</p>
+                <p><b>IBU:</b> {beerIBU}</p>
                 <img className="image" alt="beer result" src={beerImage} />
                 <br />
-                <button className="btn btn-primary" onClick={() => { this.props.clickBeer() }}> Beer me again!</button>
-                <Link to="/Form"><button className="btn btn-secondary" onClick={this.props.returnForm}>Narrow my search</button></Link>
+                <button className="btn btn-primary clickButton" onClick={() => { this.props.clickBeer() }}> Beer me again!</button>
+                <Link to="/Form"><button className="btn btn-secondary clickButton" onClick={this.props.returnForm}>Narrow my search</button></Link>
             </div>
         )
     }

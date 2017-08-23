@@ -1,20 +1,30 @@
 body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: 300;
+  height: 800px;
+  background-image: url("./beerBackground.jpg");
+}
+
+
+.mainContent{
+  overflow: auto;
+  background-color: rgba(184, 190, 198, 0.9);
+  border-radius: 15px;
 }
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 270px;
+  height: 300px;
   animation: App-logo-spin infinite 20s linear;
+  /* position: relative; */
 }
 
 .App-header {
   background-color: #3E3939;
-  height: 8%;
-  padding: 3%;
+  height: 7%;
+  padding: 2%;
   color: white;
   text-align: center;
   margin-top: 1%;
@@ -46,6 +56,7 @@ body {
 /* removing text blue, not working */
 button{
   text-decoration: none;
+  padding:4.5px;
 }
 
 .form{
@@ -62,10 +73,26 @@ button{
 } */
 
 .image{
-  max-height: 400px;
-  padding: 2%;
+  max-height: 200px;
+  padding: 1%;
 }
 
 .result-button{
   margin-bottom: 5%;
+}
+
+.buttonTitle{
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  font-size: 40px;
+  transform: translate(-50%,50%);
+}
+
+.clickButton{
+  margin: 10px;
+}
+
+.wholeButton{
+  position: relative;
 }

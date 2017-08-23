@@ -20,17 +20,23 @@ class BeerResult extends Component {
         //     else if(this.props.returnedBeer.labels == null){
         //         this.props.getDefaultBeerImage(this.props.returnedBeer)
         // } 
+        else if(!this.props.returnedBeer.labels){
+               beerImage= this.props.getDefaultBeerImage(this.props.returnedBeer)
+        } 
         else {
             // this.props.getDefaultBeerImage(this.props.returnedBeer)
-            beerImage = "bottle.jpg"
+            beerImage = "ale.png"
         }
+
+
+        // this.getDefaultImage(this.props.returnedBeer);
         //write function to change image based on specific style beer
         // getDefaultImage(style)
 
         let beerStyle;
 
-        if (this.props.returnedBeer.style.name) {
-            beerStyle = this.props.returnedBeer.style.name
+        if (this.props.returnedBeer.style.category.name) {
+            beerStyle = this.props.returnedBeer.style.category.name
         }
         else {
             beerStyle = "An awesome (yet unfound) beer style!"
