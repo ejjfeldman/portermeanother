@@ -7,6 +7,8 @@ const keys = require('./key');
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 const cors = require('cors');
+const path = require("path");
+
 
 // parse application/x-www-form-urlencoded 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -16,8 +18,11 @@ app.use(bodyParser.json())
 
 app.use(cors());
 
+app.use(express.static(path.resolve(__dirname+"./../frontend/build")))
 
-app.listen(8080, () => {
+const port = process.env.PORT || 8080;
+
+app.listen(port, () => {
     console.log("8080 is listening")
 })
 
@@ -128,6 +133,9 @@ app.post('/specificbeer', (req, response) => {
     // }) 
 })
 
+app.get("*", (req, res)=>{
+    res.sendFile(path.resolve(__dirname+"./../frontend/build/index.html"))
+})
 // app.post('randombeer', (req, res) => {
 //     res.json({ msg: newBeer.data })
 // })
