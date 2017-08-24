@@ -35,24 +35,31 @@
     <script>
 $(document).ready(function() {
   $('.pour') //Pour Me Another Drink, Bartender!
-    .delay(2000)
+    .delay(1000)
     .animate({
       height: '360px'
       }, 1500)
     .delay(1600)
     .slideUp(500);
   
-  $('#liquid') // I Said Fill 'Er Up!
+  $('#liquid')
     .delay(3400)
     .animate({
+      opacity: 1,
       height: '170px'
     }, 2500);
   
-  $('.beer-foam') // Keep that Foam Rollin' Toward the Top! Yahooo!
+  $('.beer-foam') 
     .delay(3400)
     .animate({
-      bottom: '200px'
+      bottom: '200px',
+      opacity: 1
       }, 2500);
+
+
+  $("#header") 
+  .delay(5900)
+    .fadeTo("slow", 1);
   });
 
     </script>
