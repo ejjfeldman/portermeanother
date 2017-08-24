@@ -54,7 +54,7 @@ app.get('/randombeer', (req, response) => {
         }
         newBeer = body
         // console.log(newBeer)
-        response.send(newBeer.data)
+        //response.send(newBeer.data)
         console.log('beer was grabbed')
         //calling the lcbo api to see if the beer is available [returns full list...need to narrow]
         let chosenBeer = newBeer.data.name;
@@ -72,6 +72,9 @@ app.get('/randombeer', (req, response) => {
             else {
                 console.log("It is available at the lcbo")
             }
+
+            response.send({breweryDB: newBeer.data,
+                            lcbo: bod})
 
         }
     )

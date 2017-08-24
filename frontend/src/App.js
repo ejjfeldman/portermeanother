@@ -4,6 +4,8 @@ import './App.css';
 import { Link } from 'react-router';
 import axios from 'axios';
 import {browserHistory} from 'react-router';
+import DialogBox from './DialogBox'
+
 
 let beerImage = {
   default: "bottle.jpg",
@@ -29,7 +31,9 @@ class App extends Component {
       hasBeer: false,
       formResults: {},
       currentBeer: "default",
-      returnedBeer: ""
+      returnedBeer: "",
+      open: false,
+      printAvailability: ""
     }
     this.clickBeer = this.clickBeer.bind(this);
     this.returnForm = this.returnForm.bind(this);
@@ -43,6 +47,14 @@ class App extends Component {
     this.getRandomBeer();
    // this.getSpecificBeer(); // ?
   }
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+    browserHistory.push("/form")
+  };
   //getting random beer from onClick (accessing results from brewerydb api)
   getRandomBeer() {
     console.log("get random beer ran")
@@ -52,13 +64,29 @@ class App extends Component {
     axios.get("/randombeer")
       .then(res => {
 
-        let randomBeer = res.data;
+        let randomBeer = res.data.breweryDB;
+        let availability = res.data.lcbo;
+        if (availability.pager && availability.pager.total_record_count === 0){
+          console.log("try "+ availability.suggestion + " instead")
+          this.setState({
+            printAvailability: "I'm sorry but your beer is not available at the LCBO. You should try the beer *"+ availability.suggestion +"* instead!"
+          })
+      }
+      else {
+        this.setState({
+          printAvailability: "This beer is available at the LCBO!"
+        })
+          
+      }
+        console.log("availability", availability.total_record_count)
         console.log(randomBeer);
         this.setState({
           returnedBeer: randomBeer,
-          hasBeer: true
+          hasBeer: true,
         })
       })
+
+      
       // .then(respons=>{
       //   let beerAvailability = respons.body;
       //   console.log(beerAvailability)
@@ -84,12 +112,6 @@ class App extends Component {
         });
         console.log("specific beer", specificBeer);
         console.log("values:", valuesToUse);
-        
-        // function filterItems(specificBeer) {
-        //     return newBeer.filter(function(el) {
-        //         return el.toLowerCase().indexOf(query.toLowerCase()) > -1;
-        //     })
-        //   }
 
         let oneBeer = specificBeer[Math.floor(Math.random()*specificBeer.length)];
         // console.log(oneBeer);
@@ -97,7 +119,11 @@ class App extends Component {
           returnedBeer: oneBeer,
           hasBeer: true
         })
-        console.log(this.state.returnedBeer)
+        console.log("last", this.state.returnedBeer)
+        if (this.state.returnedBeer===undefined && !this.state.open){
+          this.handleOpen()
+        }
+          
       })
       .catch(error=>{
         console.log(error);
@@ -114,16 +140,6 @@ class App extends Component {
     this.getSpecificBeer(valuesToUse)
   }
 
-  // getAvailablity(){
-  //   axios.get('/availability')
-  //   .then(res=>{
-  //     let availableBeer = res.data;
-  //     console.log(availableBeer)
-  //   })
-  // }
-
-
-  //randomBeer function
   clickBeer() {
     console.log("clicked")
   }
@@ -134,6 +150,9 @@ class App extends Component {
 //FIXXXXXXXX
   //setting default image
   getDefaultBeerImage(beer) {
+    if(!beer.style){
+      return beerImage.wheat;
+    }
     let beerStyle = beer.style.name;
     // beerImage[beerStyle]
     let beerNames = Object.keys(beerImage);
@@ -142,35 +161,18 @@ class App extends Component {
 
     for (var i = 0; i < beerNames.length; i++) {
       if (beerStyle.toLowerCase().includes(beerNames[i])){
-        let beerImage = beerImage[beerNames[i]]
-        return beerImage;
+        return beerImage[beerNames[i]]
       }
       }
-      return beerImage.default;
+      return beerImage.wheat;
     }
-    // if ((beerStyle.search(/ale/i)) > -1) {
-    //   this.setState({beerImage: "ale"})
-    // }
-    
-    // else {
-    //   beerImage = "bottle.jpg"
-  //   // }
-  // }
-
-  // getDefaultBeerImage(beer){
-  //   let specificImage = res.data.filter((beer) => {
-  //     // if(!beer || !beer.style.category || !beer.style.name){
-  //     //   return false
-  //     // }
-  //     console.log("comparing ", beer.style.name.toLowerCase(), "to", valuesToUse.beerType)
-  //     return beer.style.name.toLowerCase().includes( valuesToUse.beerType );
-  //     //return true if it goes in specificBeer
-  //   });
-  //   if(specificImage)
-  // }
-  // <img src={beerImage[this.props.beerType]}>
 
   render() {
+    let box;
+    if(this.state.open){
+
+      box= <DialogBox handleClose={this.handleClose} open={this.state.open}/>
+    }
     // console.log(this.props.children);
     return (
       <div className="App container">
@@ -182,6 +184,7 @@ class App extends Component {
           </nav>
         </div>
         <br />
+        {box}
         <div className="App-header jumbotron">
           <h1>Porter Me Another</h1>
           <p>Don't Wine, Have a Beer</p>
@@ -196,7 +199,9 @@ class App extends Component {
             handleSubmit: this.handleSubmit,
             passStateUp: this.passStateUp,
             "getDefaultBeerImage": this.getDefaultBeerImage,
-            "specificBeer": this.getSpecificBeer
+            "specificBeer": this.getSpecificBeer,
+            printAvailability: this.state.printAvailability
+
 
           })}
 

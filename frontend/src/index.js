@@ -10,6 +10,7 @@ import User from './User';
 import BeerResult from './BeerResult';
 import SpecificResult from './SpecificResult';
 import Form from './Form';
+import DialogBox from './DialogBox';
 
 import { Router, Route, browserHistory, IndexRoute} from 'react-router';
 
