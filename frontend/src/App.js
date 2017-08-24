@@ -46,6 +46,10 @@ class App extends Component {
 
     this.getRandomBeer();
    // this.getSpecificBeer(); // ?
+      
+      
+
+
   }
   handleOpen = () => {
     this.setState({open: true});
@@ -173,6 +177,8 @@ class App extends Component {
 
       box= <DialogBox handleClose={this.handleClose} open={this.state.open}/>
     }
+
+    
     // console.log(this.props.children);
     return (
       <div className="App container">
@@ -185,10 +191,35 @@ class App extends Component {
         </div>
         <br />
         {box}
+  <div className="mainHeader">     
+  <div id="pour"></div>
+  <div id="beaker">
+    <div className="beer-foam">
+      <div className="foam-1"></div>
+      <div className="foam-2"></div>
+      <div className="foam-3"></div>
+      <div className="foam-4"></div>
+      <div className="foam-5"></div>
+      <div className="foam-6"></div>
+      <div className="foam-7"></div>
+    </div>
+    
+    <div id="liquid">
+      
+      <div className="bubble bubble1"></div>
+      <div className="bubble bubble2"></div>
+      <div className="bubble bubble3"></div>
+      <div className="bubble bubble4"></div>
+      <div className="bubble bubble5"></div>
+    </div>
+  </div>
+</div>
+  
         <div className="App-header jumbotron">
           <h1>Porter Me Another</h1>
           <p>Don't Wine, Have a Beer</p>
         </div>
+
         <div className="mainContent">
           {React.cloneElement(this.props.children, {
             "returnForm": this.returnForm,

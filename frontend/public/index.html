@@ -15,7 +15,8 @@
 
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <!--
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>   
+<!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -31,6 +32,30 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <script>
+$(document).ready(function() {
+  $('.pour') //Pour Me Another Drink, Bartender!
+    .delay(2000)
+    .animate({
+      height: '360px'
+      }, 1500)
+    .delay(1600)
+    .slideUp(500);
+  
+  $('#liquid') // I Said Fill 'Er Up!
+    .delay(3400)
+    .animate({
+      height: '170px'
+    }, 2500);
+  
+  $('.beer-foam') // Keep that Foam Rollin' Toward the Top! Yahooo!
+    .delay(3400)
+    .animate({
+      bottom: '200px'
+      }, 2500);
+  });
+
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
