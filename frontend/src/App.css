@@ -2,7 +2,7 @@ body {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
   font-weight: 300;
   height: 800px;
-  background-image: url("./beerBackground.jpg");
+  background-image: url("./beerBackground2.png");
 }
 
 
@@ -10,6 +10,12 @@ body {
   overflow: auto;
   background-color: rgba(184, 190, 198, 0.9);
   border-radius: 15px;
+  position: relative;
+  top: -70px;
+  width: 90%;
+  padding-top: 2%;
+  margin: auto;
+
 }
 .App {
   text-align: center;
@@ -23,13 +29,14 @@ body {
 
 .App-header, .jumbotron {
   /* background-color: #3E3939; */
-  height: 7%;
+  /* height: 50%; */
   padding: 2%;
   color: white;
   text-align: center;
   background-color: transparent;
   width: 100%;
   opacity: 0;
+  margin:0;
 }
 
 .App-intro {
@@ -67,6 +74,7 @@ button{
   padding: 2%;
   width: 50%;
   margin-left: 25%;
+  margin-bottom: 2%;
   background-color: #DCDCDC;
 }
 
@@ -97,6 +105,7 @@ button{
 
 .clickButton{
   margin: 10px;
+  margin-bottom: 30px;
 }
 
 .wholeButton{
@@ -109,7 +118,7 @@ button{
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  top: -30px;
+  top: -90px;
   width: 90%;
 }
 

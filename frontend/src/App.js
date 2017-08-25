@@ -6,7 +6,7 @@ import axios from 'axios';
 import {browserHistory} from 'react-router';
 import DialogBox from './DialogBox'
 
-
+//default beer images for each style
 let beerImage = {
   default: "bottle.jpg",
   ale: 'ale.png',
@@ -38,19 +38,14 @@ class App extends Component {
     this.clickBeer = this.clickBeer.bind(this);
     this.returnForm = this.returnForm.bind(this);
     this.getRandomBeer = this.getRandomBeer.bind(this);
-
     this.passStateUp = this.passStateUp.bind(this);
-
     this.getDefaultBeerImage = this.getDefaultBeerImage.bind(this);
-    //randomBeer contains obtained random beer..need to put in function to refresh/call it
 
-    this.getRandomBeer();
-   // this.getSpecificBeer(); // ?
-      
-      
-
+    // this.getRandomBeer();
+   // this.getSpecificBeer(); 
 
   }
+  //alert for when the beer is not available
   handleOpen = () => {
     this.setState({open: true});
   };
@@ -59,7 +54,8 @@ class App extends Component {
     this.setState({open: false});
     browserHistory.push("/form")
   };
-  //getting random beer from onClick (accessing results from brewerydb api)
+
+  //getting a random beer 
   getRandomBeer() {
     console.log("get random beer ran")
     this.setState({
@@ -90,35 +86,27 @@ class App extends Component {
         })
       })
 
-      
-      // .then(respons=>{
-      //   let beerAvailability = respons.body;
-      //   console.log(beerAvailability)
-      // })
       .catch(error => {
         console.log(error);
       })
   }
-  //FIX ME!!
-//getting specific beer from form input
+
   getSpecificBeer(valuesToUse) {
     //trying to console.log to see when beer is retrieved
     
     axios.post("/specificbeer", {formResults: valuesToUse})
       .then(res=>{
+
         let specificBeer = res.data.filter((beer) => {
-          if(!beer || !beer.style.category || !beer.style.name){
+          console.log("RES", beer)
+          if(!beer || !(beer.style) || !(beer.style.category) || !(beer.style.name)){
             return false
           }
           console.log("comparing ", beer.style.name.toLowerCase(), "to", valuesToUse.beerType)
           return beer.style.name.toLowerCase().includes( valuesToUse.beerType );
           //return true if it goes in specificBeer
         });
-        console.log("specific beer", specificBeer);
-        console.log("values:", valuesToUse);
-
         let oneBeer = specificBeer[Math.floor(Math.random()*specificBeer.length)];
-        // console.log(oneBeer);
         this.setState({
           returnedBeer: oneBeer,
           hasBeer: true
@@ -135,12 +123,9 @@ class App extends Component {
       browserHistory.push("/specificResult")
   }
 
-  //not setting state...
   passStateUp(valuesToUse) {
     console.log("called")
     this.setState({ formResults: valuesToUse })
-    // console.log(this.state.formResults)
-    // getRandomBeer()
     this.getSpecificBeer(valuesToUse)
   }
 
@@ -151,14 +136,12 @@ class App extends Component {
   returnForm() {
     console.log("clicked")
   }
-//FIXXXXXXXX
-  //setting default image
+
   getDefaultBeerImage(beer) {
     if(!beer.style){
       return beerImage.wheat;
     }
     let beerStyle = beer.style.name;
-    // beerImage[beerStyle]
     let beerNames = Object.keys(beerImage);
     console.log(beerNames);
     console.log(beerStyle);
@@ -174,12 +157,8 @@ class App extends Component {
   render() {
     let box;
     if(this.state.open){
-
       box= <DialogBox handleClose={this.handleClose} open={this.state.open}/>
     }
-
-    
-    // console.log(this.props.children);
     return (
       <div className="App container">
         <div className="navbar navbar-right navbar-static-top">
@@ -243,12 +222,12 @@ class App extends Component {
       <div className="bubble bubble8"></div>
       <div className="bubble bubble9"></div>
       <div className="bubble bubble10"></div>
-            <div className="bubble bubble11"></div>
+      <div className="bubble bubble11"></div>
       <div className="bubble bubble12"></div>
       <div className="bubble bubble13"></div>
       <div className="bubble bubble14"></div>
       <div className="bubble bubble15"></div>
-            <div className="bubble bubble16"></div>
+      <div className="bubble bubble16"></div>
       <div className="bubble bubble17"></div>
       <div className="bubble bubble18"></div>
       <div className="bubble bubble19"></div>
@@ -262,9 +241,6 @@ class App extends Component {
         </div>
   </div>
 </div>
-  
-
-
         <div className="mainContent">
           {React.cloneElement(this.props.children, {
             "returnForm": this.returnForm,
@@ -277,8 +253,6 @@ class App extends Component {
             "getDefaultBeerImage": this.getDefaultBeerImage,
             "specificBeer": this.getSpecificBeer,
             printAvailability: this.state.printAvailability
-
-
           })}
 
           <footer className="App-intro">
